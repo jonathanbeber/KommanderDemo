@@ -1,0 +1,23 @@
+apiVersion: workspaces.kommander.mesosphere.io/v1alpha1
+kind: Workspace
+metadata:
+  annotations:
+    kommander.mesosphere.io/description: Production workspace
+    kommander.mesosphere.io/display-name: Production
+  name: production
+spec:
+  clusterLabels:
+    workspaces.kommander.mesosphere.io/workspace-ref: production-workspace
+  namespaceName: production
+---
+apiVersion: workspaces.kommander.mesosphere.io/v1alpha1
+kind: Workspace
+metadata:
+  annotations:
+    kommander.mesosphere.io/description: Sandbox workspace
+    kommander.mesosphere.io/display-name: Sandbox
+  name: sandbox
+spec:
+  clusterLabels:
+    workspaces.kommander.mesosphere.io/workspace-ref: sandbox-workspace
+  namespaceName: sandbox

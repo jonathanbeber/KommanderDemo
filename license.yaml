@@ -1,0 +1,8 @@
+apiVersion: kommander.mesosphere.io/v1beta1
+kind: License
+metadata:
+  name: my-license
+  namespace: kommander
+spec:
+  licenseRef:
+    name: my-license-secret

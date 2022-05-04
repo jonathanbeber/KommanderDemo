@@ -1,0 +1,61 @@
+apiVersion: kommander.mesosphere.io/v1beta1
+kind: VirtualGroup
+metadata:
+  name: sandbox
+spec:
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: oidc:ANOTHER_GROUP
+  # # If your setups does not support groups, you can add users to
+  # # Kommander's virtual groups individually, just uncomment the lines
+  # # below and change it to match your user's email.
+  # - apiGroup: rbac.authorization.k8s.io
+  #   kind: User
+  #   name: anotheremail@yourcompany.com
+---
+apiVersion: workspaces.kommander.mesosphere.io/v1alpha1
+kind: VirtualGroupWorkspaceRoleBinding
+metadata:
+  name: sandbox-cluster-admin-binding
+  namespace: sandbox
+spec:
+  placement:
+    clusterSelector: {}
+  virtualGroupRef:
+    name: sandbox
+  workspaceRoleRef:
+    name: workspace-cluster-admin
+---
+apiVersion: workspaces.kommander.mesosphere.io/v1alpha1
+kind: VirtualGroupKommanderWorkspaceRoleBinding
+metadata:
+  name: sandbox-kommander-workspace-binding
+  namespace: sandbox
+spec:
+  kommanderWorkspaceRoleRef:
+    name: kommander-workspace-admin
+  virtualGroupRef:
+    name: sandbox
+---
+apiVersion: kommander.mesosphere.io/v1beta1
+kind: VirtualGroupClusterRoleBinding
+metadata:
+  name: role-binding-sandbox
+spec:
+  clusterRoleRef:
+    name: kommander-federated-view
+  placement:
+    clusterSelector: {}
+  virtualGroupRef:
+    name: sandbox
+---
+apiVersion: workspaces.kommander.mesosphere.io/v1alpha1
+kind: VirtualGroupKommanderClusterRoleBinding
+metadata:
+  name: role-binding-view-sandbox
+spec:
+  clusterRoleRef:
+    name: dkp-kommander-view
+  virtualGroupRef:
+    name: sandbox
